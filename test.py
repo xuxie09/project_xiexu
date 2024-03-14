@@ -66,12 +66,10 @@ def main(args):
 
     model.eval()
     for i, (x, y, csm, mask) in enumerate(tqdm(dataloader)):
-        x, csm, mask = x.to(device), csm.to(device), mask.to(device)
-
+        x, y, csm, mask = x.to(device), y.to(device), csm.to(device), mask.to(device)
         with torch.no_grad():
             y_pred = model(x, csm, mask).detach().cpu()
-
-        y = np.abs(r2c(y.numpy(), axis=1))
+        y = np.abs(r2c(y.detach().cpu().numpy(), axis=1))
         y_pred = np.abs(r2c(y_pred.numpy(), axis=1))
 
         f = h5py.File(tensorboard_dir + '/test/recon_' + str(i).zfill(3) + '.h5', 'w')

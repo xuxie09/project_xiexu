@@ -1,0 +1,8 @@
+config path: configs/base_modl,k=1.yaml
+workspace: ./workspace/base_modl_layer-05_iter-01_epoch-010_loss-MSE_optim-Adam_lr-0.001000
+description: base config, k=1
+
+
+train start: 2024-01-15 12:52:45
+-----------------------
+epoch 0/10 train score: -53.9477	loss: 0.1205

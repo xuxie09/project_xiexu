@@ -1,7 +1,7 @@
 import os, shutil
 import torch
 import torch.nn as nn
-
+import torch.nn.functional as F
 def config_output_dir(base_dir, configs):
 
     dir_name  = configs['model_name']
@@ -31,7 +31,10 @@ def get_dirs(workspace, remake=False):
 def get_dataset(dataset_name, dataset_params, mode, verbose=True):
     if dataset_name == 'modl_dataset':
         from datasets.modl_dataset import modl_dataset
-    dataset = modl_dataset(mode=mode, **dataset_params)
+        dataset = modl_dataset(mode=mode, **dataset_params)
+    if dataset_name == 'ssdu_dataset':
+        from datasets.ssdu_dataset import ssdu_dataset
+        dataset = ssdu_dataset(mode=mode, **dataset_params)
     if verbose:
         print('{} data: {}'.format(mode, len(dataset)))
     return dataset
@@ -53,16 +56,61 @@ def get_model(model_name, model_params, device):
     elif model_name == 'base_varnet':
         from models.varnet import VarNet
         model = VarNet(**model_params)
-
+    elif model_name == 'base_ssdu':
+        from models.ssdu import SSDU
+        model = SSDU(**model_params)
     # if device == 'cuda' and torch.cuda.device_count()>1:
     #     model = nn.DataParallel(model)
     model.to(device)
     return model
 
+# class CustomLoss(nn.Module):
+#     def __init__(self):
+#         super(CustomLoss, self).__init__()
+
+#     def forward(self, u, v):
+#         diff = u - v
+#         norm_u_l2 = torch.norm(u, p=2) + 1e-8  # Adding epsilon to avoid division by zero
+#         norm_u_l1 = torch.norm(u, p=1) + 1e-8
+#         l2_loss = torch.norm(diff, p=2) / norm_u_l2
+#         l1_loss = torch.norm(diff, p=1) / norm_u_l1
+#         return l2_loss + l1_loss
+
+class CustomLoss(nn.Module):
+    def __init__(self):
+        super(CustomLoss, self).__init__()
+
+    def forward(self, y_pred: torch.Tensor, y: torch.Tensor) -> torch.Tensor:
+        # 确保输入和目标都是实数
+        if torch.is_complex(y_pred) or torch.is_complex(y):
+            raise ValueError("Input and target must be real tensors")
+
+        scalar = 0.5
+        
+        # Reshape tensors to combine all but the last dimension to treat them as vectors
+        y_pred_flat = y_pred.view(-1, y_pred.shape[-1])
+        y_flat = y.view(-1, y.shape[-1])
+
+        # Calculate L2 loss
+        l2_loss = torch.norm(y_pred_flat - y_flat, p=2, dim=1) / torch.norm(y_flat, p=2, dim=1)
+        l2_loss = torch.mean(l2_loss)  # Take the mean to average over all the samples
+
+        # Calculate L1 loss
+        l1_loss = torch.norm(y_pred_flat - y_flat, p=1, dim=1) / torch.norm(y_flat, p=1, dim=1)
+        l1_loss = torch.mean(l1_loss)  # Take the mean to average over all the samples
+        
+        return scalar * (l2_loss + l1_loss)
+
 def get_loss(loss_name):
     if loss_name == 'MSE':
         return nn.MSELoss()
-
+    
+    if loss_name == 'complex_mse':
+        return nn.CrossEntropyLoss()
+    
+    if loss_name == 'L1':
+        return CustomLoss()
+        
 def get_score_fs(score_names):
     score_fs = {}
     for score_name in score_names:

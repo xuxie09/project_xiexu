@@ -1,0 +1,37 @@
+config path: configs/base_modl,k=1.yaml
+workspace: ./workspace/base_modl_layer-05_iter-01_epoch-020_loss-MSE_optim-Adam_lr-0.001000
+description: base config, k=1
+
+
+train start: 2024-01-16 01:17:20
+-----------------------
+epoch 0/20 train score: 7.6767	loss: 0.1041
+epoch 1/20 train score: 15.5884	loss: 0.0163
+epoch 2/20 train score: 17.0747	loss: 0.0132
+epoch 3/20 train score: 17.6335	loss: 0.0119
+epoch 4/20 train score: 18.6615	loss: 0.0100
+epoch 5/20 train score: 19.8032	loss: 0.0084
+epoch 6/20 train score: 20.9978	loss: 0.0069
+epoch 7/20 train score: 22.4769	loss: 0.0054
+epoch 8/20 train score: 23.4931	loss: 0.0042
+epoch 9/20 train score: 24.1749	loss: 0.0038
+epoch 10/20 train score: 25.9883	loss: 0.0025
+epoch 11/20 train score: 26.6547	loss: 0.0020
+epoch 12/20 train score: 27.3510	loss: 0.0017
+epoch 13/20 train score: 27.4479	loss: 0.0015
+epoch 14/20 train score: 28.1529	loss: 0.0013
+epoch 15/20 train score: 28.4046	loss: 0.0011
+epoch 16/20 train score: 28.6018	loss: 0.0009
+epoch 17/20 train score: 28.9057	loss: 0.0008
+epoch 18/20 train score: 29.2130	loss: 0.0007
+epoch 19/20 train score: 29.3059	loss: 0.0007
+-----------------------
+total train time: 49.10 min
+best score: 29.3059
+
+
+test start: 2024-01-16 02:06:49
+test PSNR score: 32.8759
+test SSIM score: 0.6576
+-----------------------
+total test time: 0.92 min

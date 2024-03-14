@@ -1,0 +1,22 @@
+config path: configs/base_modl,k=1.yaml
+workspace: ./workspace/base_modl_layer-05_iter-01_epoch-005_loss-MSE_optim-Adam_lr-0.001000
+description: base config, k=1
+
+
+train start: 2024-01-15 23:21:48
+-----------------------
+epoch 0/5 train score: 0.6915	loss: 0.0987
+epoch 1/5 train score: 4.5494	loss: 0.0480
+epoch 2/5 train score: 6.8148	loss: 0.0424
+epoch 3/5 train score: 10.5870	loss: 0.0176
+epoch 4/5 train score: 12.5144	loss: 0.0246
+-----------------------
+total train time: 1.22 min
+best score: 12.5144
+
+
+test start: 2024-01-15 23:24:02
+test PSNR score: -4.0083
+test SSIM score: 0.0287
+-----------------------
+total test time: 0.23 min

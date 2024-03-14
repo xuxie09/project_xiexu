@@ -1,0 +1,7 @@
+config path: configs/base_ssdu,k=1.yaml
+workspace: ./workspace/base_ssdu_layer-10_iter-01_epoch-010_loss-CrossEntropy_optim-Adam_lr-0.001000
+description: base config, k=1
+
+
+train start: 2024-03-14 13:19:52
+-----------------------

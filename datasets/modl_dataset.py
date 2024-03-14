@@ -28,7 +28,9 @@ class modl_dataset(Dataset):
         x0 = undersample_(gt, csm, mask, self.sigma)
 
         return torch.from_numpy(c2r(x0)), torch.from_numpy(c2r(gt)), torch.from_numpy(csm), torch.from_numpy(mask)
-
+        #`torch.from_numpy` 函数用于将 NumPy 数组转换为 PyTorch 张量。
+        #c2r     """:input shape: row x col (complex64):output shape: 2 x row x col (float32)"""
+        
     def __len__(self):
         with h5.File(self.dataset_path, 'r') as f:
             num_data = len(f[self.prefix+'Mask'])

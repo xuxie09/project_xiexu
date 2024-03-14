@@ -3,7 +3,7 @@ import os, time, yaml
 from tqdm import tqdm
 from datetime import datetime
 from collections import defaultdict
-
+from models import mri
 from utils import *
 from get_instances import *
 
@@ -102,13 +102,21 @@ def main(args):
             if phase == 'train': model.train()
             else: model.eval()
 
-            for i, (x, y, csm, mask) in enumerate(tqdm(dataloaders[phase])):
-                x, y, csm, mask = x.to(device), y.to(device), csm.to(device), mask.to(device)
+            #for i, (x, y, csm, mask) in enumerate(tqdm(dataloaders[phase])):
+            #    x, y, csm, mask = x.to(device), y.to(device), csm.to(device), mask.to(device)
 
+                #with torch.set_grad_enabled(phase=='train'):
+                    #y_pred = model(x, csm, mask)
+                    #loss = loss_f(y_pred, y)
+            for i, (x, ksl,y, csm, trn_mask, loss_mask) in enumerate(tqdm(dataloaders[phase])):
+                x, ksl,y, csm, trn_mask, loss_mask = x.to(device), ksl[0].to(device), y.to(device),csm.to(device), trn_mask.to(device), loss_mask.to(device)
                 with torch.set_grad_enabled(phase=='train'):
-                    y_pred = model(x, csm, mask)
-                    loss = loss_f(y_pred, y)
-
+                    y_pred = model(x, csm, trn_mask)
+                    SenseOp = mri.SenseOp(csm, loss_mask)
+                    y_k = SenseOp.fwd(y_pred)
+                    magnitude = torch.abs(y_k)
+                    loss = loss_f(magnitude, ksl)
+                    
                 if phase == 'train':
                     optimizer.zero_grad()
                     loss.backward()
@@ -116,11 +124,15 @@ def main(args):
                         nn.utils.clip_grad_value_(model.parameters(), clip_value=1.0)
                     optimizer.step()
 
-                running_score['loss'] += loss.item() * y_pred.size(0)
+                running_score['loss'] += loss.item() * y_k.size(0)
+                #这个操作计算当前批次的总损失，而不仅仅是平均损失。由于loss.item()返回的是平均损失（即对当前批次的所有样本损失求平均后的结果），乘以批次中的样本数量y_k.size(0)可以得到在所有样本上累积的总损失。
+                #最后，这个总损失被加到running_score['loss']上，以便累积整个数据集（例如，一个epoch内所有批次）的总损失。这样做是为了在训练过程中监控模型的性能，看看模型是否正在学习（即损失是否随时间下降）。
+                ksl = np.abs(r2c(ksl.detach().cpu().numpy(), axis=1))
                 y = np.abs(r2c(y.detach().cpu().numpy(), axis=1))
                 y_pred = np.abs(r2c(y_pred.detach().cpu().numpy(), axis=1))
+                y_k = np.abs(r2c(y_k.detach().cpu().numpy(), axis=1))
                 for score_name, score_f in score_fs.items():
-                    running_score[score_name] += score_f(y, y_pred) * y_pred.shape[0]
+                    running_score[score_name] += score_f(ksl, y_k) * y_k.shape[0]
 
             #scheduler
             if phase == 'train' and scheduler:
@@ -133,7 +145,7 @@ def main(args):
             if args.write_lr:
                 writers[phase].add_scalar('lr', optimizer.param_groups[0]['lr'], epoch)
             if args.write_image > 0 and (epoch % args.write_image == 0):
-                writers[phase].add_figure('img', display_img(np.abs(r2c(x[-1].detach().cpu().numpy())), mask[-1].detach().cpu().numpy(), \
+                writers[phase].add_figure('img', display_img(np.abs(r2c(x[-1].detach().cpu().numpy())), trn_mask[-1].detach().cpu().numpy(), \
                     y[-1], y_pred[-1], epoch_score[val_score_name]), epoch)
             if args.write_lambda:
                 print('lam:', model.dc.lam.item())

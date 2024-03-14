@@ -1,0 +1,22 @@
+config path: configs/base_varnet,k=10.yaml
+workspace: ./workspace/base_varnet_layer-05_iter-10_epoch-005_loss-MSE_optim-Adam_lr-0.001000
+description: base config, k=10. Restore weights from <base_varnet,k=1>
+
+
+train start: 2024-01-26 08:41:54
+-----------------------
+epoch 0/5 train score: 25.5952	loss: 0.0303
+epoch 1/5 train score: 30.5550	loss: 0.0004
+epoch 2/5 train score: 30.3432	loss: 0.0004
+epoch 3/5 train score: 32.2830	loss: 0.0002
+epoch 4/5 train score: 33.8735	loss: 0.0002
+-----------------------
+total train time: 26.47 min
+best score: 33.8735
+
+
+test start: 2024-01-26 09:13:48
+test PSNR score: 35.1297
+test SSIM score: 0.8679
+-----------------------
+total test time: 1.29 min

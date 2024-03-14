@@ -1,0 +1,47 @@
+### Starting TaskPrologue of job 785487 on tg061 at Tue 12 Mar 2024 10:29:33 PM CET
+Running on cores 0-1,10-11,16-17,26-27 with governor ondemand
+Tue Mar 12 22:29:33 2024       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.113.01             Driver Version: 535.113.01   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA GeForce RTX 2080 Ti     On  | 00000000:18:00.0 Off |                  N/A |
+| 27%   27C    P8               7W / 250W |      1MiB / 11264MiB |      0%      Default |
+|                                         |                      |                  N/A |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|  No running processes found                                                           |
++---------------------------------------------------------------------------------------+
+### Finished TaskPrologue
+
+python: can't open file '/home/woody/rzku/mlvl123h/Another/VarNet_MoDL_PyTorch/scripts/train.py': [Errno 2] No such file or directory
+=== JOB_STATISTICS ===
+=== current date     : Tue 12 Mar 2024 10:29:33 PM CET
+= Job-ID             : 785487 on tinygpu
+= Job-Name           : train_ssdu
+= Job-Command        : /home/woody/rzku/mlvl123h/Another/VarNet_MoDL_PyTorch/scripts/train_ssdu.sh
+= Initial workdir    : /home/woody/rzku/mlvl123h/Another/VarNet_MoDL_PyTorch/scripts
+= Queue/Partition    : work
+= Slurm account      : rzku with QOS=normal
+= Requested resources:  for 00:10:00
+= Elapsed runtime    : 00:00:01
+= Total RAM usage    : 0.0 GiB of requested  GiB (%)   
+= Node list          : tg061
+= Subm/Elig/Start/End: 2024-03-12T22:29:31 / 2024-03-12T22:29:31 / 2024-03-12T22:29:32 / 2024-03-12T22:29:33
+======================
+=== Quota infos ======
+    Path              Used     SoftQ    HardQ    Gracetime  Filec    FileQ    FiHaQ    FileGrace    
+    /home/hpc           23.5G   104.9G   209.7G        N/A  34,466      500K   1,000K        N/A    
+    /home/vault          0.0K  1048.6G  2097.2G        N/A       1      200K     400K        N/A    
+    /home/woody        457.0G   500.0G   750.0G        N/A     209K   5,000K   7,500K        N/A    
+======================
+=== GPU utilization ==
+gpu_name, gpu_bus_id, pid, gpu_utilization [%], mem_utilization [%], max_memory_usage [MiB], time [ms]

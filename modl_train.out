@@ -1,0 +1,62 @@
+### Starting TaskPrologue of job 786407 on tg086 at Thu 14 Mar 2024 12:00:14 PM CET
+Running on cores 28-31,60-63 with governor ondemand
+Thu Mar 14 12:00:14 2024       
++---------------------------------------------------------------------------------------+
+| NVIDIA-SMI 535.113.01             Driver Version: 535.113.01   CUDA Version: 12.2     |
+|-----------------------------------------+----------------------+----------------------+
+| GPU  Name                 Persistence-M | Bus-Id        Disp.A | Volatile Uncorr. ECC |
+| Fan  Temp   Perf          Pwr:Usage/Cap |         Memory-Usage | GPU-Util  Compute M. |
+|                                         |                      |               MIG M. |
+|=========================================+======================+======================|
+|   0  NVIDIA GeForce RTX 3080        On  | 00000000:DB:00.0 Off |                  N/A |
+| 30%   38C    P8              18W / 300W |      2MiB / 10240MiB |      0%      Default |
+|                                         |                      |                  N/A |
++-----------------------------------------+----------------------+----------------------+
+                                                                                         
++---------------------------------------------------------------------------------------+
+| Processes:                                                                            |
+|  GPU   GI   CI        PID   Type   Process name                            GPU Memory |
+|        ID   ID                                                             Usage      |
+|=======================================================================================|
+|  No running processes found                                                           |
++---------------------------------------------------------------------------------------+
+### Finished TaskPrologue
+
+train data: 360
+config path: configs/base_ssdu,k=1.yaml
+workspace: ./workspace/base_ssdu_layer-10_iter-01_epoch-002_loss-L1_optim-Adam_lr-0.001000
+description: base config, k=1
+
+
+train start: 2024-03-14 12:00:26
+-----------------------
+lam: 0.0645609125494957
+epoch 0/2 train score: 54.5276	loss: 3.8812
+lam: 0.06599298864603043
+epoch 1/2 train score: 54.7971	loss: 3.8832
+saving model to ..../workspace/base_ssdu_layer-10_iter-01_epoch-002_loss-L1_optim-Adam_lr-0.001000/checkpoints/final.epoch0001-score54.7971.pth
+-----------------------
+total train time: 1.52 min
+best score: 54.7971
+=== JOB_STATISTICS ===
+=== current date     : Thu 14 Mar 2024 12:01:59 PM CET
+= Job-ID             : 786407 on tinygpu
+= Job-Name           : modl_train-job
+= Job-Command        : /home/woody/rzku/mlvl123h/Another/VarNet_MoDL_PyTorch/scripts/train_ssdu.sh
+= Initial workdir    : /home/woody/rzku/mlvl123h/Another/VarNet_MoDL_PyTorch
+= Queue/Partition    : rtx3080
+= Slurm account      : rzku with QOS=normal
+= Requested resources:  for 20:00:00
+= Elapsed runtime    : 00:01:46
+= Total RAM usage    : 0.9 GiB of requested  GiB (%)   
+= Node list          : tg086
+= Subm/Elig/Start/End: 2024-03-14T12:00:12 / 2024-03-14T12:00:12 / 2024-03-14T12:00:13 / 2024-03-14T12:01:59
+======================
+=== Quota infos ======
+    Path              Used     SoftQ    HardQ    Gracetime  Filec    FileQ    FiHaQ    FileGrace    
+    /home/hpc           24.3G   104.9G   209.7G        N/A  30,300      500K   1,000K        N/A    
+    /home/woody        445.8G   500.0G   750.0G        N/A     214K   5,000K   7,500K        N/A    
+======================
+=== GPU utilization ==
+gpu_name, gpu_bus_id, pid, gpu_utilization [%], mem_utilization [%], max_memory_usage [MiB], time [ms]
+NVIDIA GeForce RTX 3080, 00000000:DB:00.0, 2750779, 23 %, 13 %, 836 MiB, 99451 ms

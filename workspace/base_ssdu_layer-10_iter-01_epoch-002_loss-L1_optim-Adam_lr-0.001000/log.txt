@@ -1,0 +1,12 @@
+config path: configs/base_ssdu,k=1.yaml
+workspace: ./workspace/base_ssdu_layer-10_iter-01_epoch-002_loss-L1_optim-Adam_lr-0.001000
+description: base config, k=1
+
+
+train start: 2024-03-14 12:00:26
+-----------------------
+epoch 0/2 train score: 54.5276	loss: 3.8812
+epoch 1/2 train score: 54.7971	loss: 3.8832
+-----------------------
+total train time: 1.52 min
+best score: 54.7971

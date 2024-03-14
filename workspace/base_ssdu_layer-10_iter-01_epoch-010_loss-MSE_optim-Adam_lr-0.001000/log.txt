@@ -1,0 +1,27 @@
+config path: configs/base_ssdu,k=1.yaml
+workspace: ./workspace/base_ssdu_layer-10_iter-01_epoch-010_loss-MSE_optim-Adam_lr-0.001000
+description: base config, k=1
+
+
+train start: 2024-03-14 14:33:47
+-----------------------
+epoch 0/10 train score: 63.4034	loss: 0.0018
+epoch 1/10 train score: 71.7381	loss: 0.0008
+epoch 2/10 train score: 74.6061	loss: 0.0007
+epoch 3/10 train score: 77.1938	loss: 0.0005
+epoch 4/10 train score: 78.7533	loss: 0.0005
+epoch 5/10 train score: 79.5714	loss: 0.0004
+epoch 6/10 train score: 80.0172	loss: 0.0004
+epoch 7/10 train score: 81.6701	loss: 0.0003
+epoch 8/10 train score: 82.1261	loss: 0.0003
+epoch 9/10 train score: 82.1833	loss: 0.0003
+-----------------------
+total train time: 6.97 min
+best score: 82.1833
+
+
+test start: 2024-03-14 14:42:04
+test PSNR score: 13.3767
+test SSIM score: 0.2607
+-----------------------
+total test time: 0.27 min
